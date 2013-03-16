@@ -13,9 +13,12 @@ namespace Monthly_Forecast_Sales
     /// <typeparam name="U">Valor 2</typeparam>
     public class Pair<T, U>
     {
-        public Pair() {}
-
-        public Pair(T first, U second)
+        /// <summary>
+        /// Construtor com valores padrão
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        public Pair(T first = default(T), U second = default(U))
         {
             this.First = first;
             this.Second = second;
@@ -23,6 +26,11 @@ namespace Monthly_Forecast_Sales
 
         public T First { get; set; }
         public U Second { get; set; }
+
+        public override string ToString()
+        {
+            return "{ " + First.ToString() + " ; " + Second.ToString() + " }";
+        }
     };
 
     /// <summary>
@@ -34,6 +42,12 @@ namespace Monthly_Forecast_Sales
         public string Conclusion { get; set; }
         public double Degree { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <param name="conclusion"></param>
+        /// <param name="degree"></param>
         public Rule(string[] conditions, string conclusion, double degree)
         {
             Conditions = conditions;
@@ -41,6 +55,10 @@ namespace Monthly_Forecast_Sales
             Degree = degree;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string toReturn = "SE ";
@@ -51,6 +69,22 @@ namespace Monthly_Forecast_Sales
             toReturn += " = " + Degree;
 
             return toReturn;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rule1"></param>
+        /// <param name="rule2"></param>
+        /// <returns></returns>
+        public bool Equals(Rule rule1)
+        {
+            bool value = true;
+            for (int i = 0; i < this.Conditions.Length; i++)
+                if (this.Conditions[i] != rule1.Conditions[i])
+                    return false;
+
+            return value;
         }
 
         /// <summary>
@@ -88,6 +122,13 @@ namespace Monthly_Forecast_Sales
         public double Peak { get; set; }
         public double End { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="begin"></param>
+        /// <param name="peak"></param>
+        /// <param name="end"></param>
         public Set(string label, double begin, double peak, double end)
         {
             Label = label;
@@ -96,6 +137,11 @@ namespace Monthly_Forecast_Sales
             End = end;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public double getPertinenceDegree( double value )
         {
             if (value <= Begin || value > End)

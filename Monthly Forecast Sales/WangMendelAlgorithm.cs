@@ -15,43 +15,26 @@ namespace Monthly_Forecast_Sales
         public List<Rule> BaseRules { get; set; }
 
         // Fuzzy Sets
-        public Set[] Sets { get; set; }   
-
-        // Domains
-        public double MarginMax { get; set; }
-        public double MarginMin { get; set; }
+        public Set[] Sets { get; set; }
 
         /// <summary>
         /// Construtor do algoritmo Wang-Mendel
         /// </summary>
         /// <param name="inputs">Entradas para o algoritmo</param>
         /// <param name="sets">Quantidade de conjuntos</param>
-        public WangMendelAlgorithm(double[] inputs, int sets)
+        public WangMendelAlgorithm(double[] inputs, Set[] sets)
         {
+            // Initializing Variables
             Inputs = inputs;
             GeneratedRules = new List<Rule>();
             BaseRules = new List<Rule>();
-            Sets = new Set[sets];
-
-            // Step 1 //
-            // Setting domain with 20% of security margin
-            MarginMin = -34.16;//inputs.Min() * 1.1;
-            MarginMax = 42.72;//inputs.Max() * 1.1;
-
-            // Determining sets
-            double sizeOfSet = (MarginMax - MarginMin) / (sets - 1);    // 2*N + 1
-            Sets[0] = new Set("set0", MarginMin - sizeOfSet, MarginMin, MarginMin + sizeOfSet);
-            for (int i = 1; i < Sets.Length; i++)
-                Sets[i] = new Set("set" + i, Sets[i-1].Peak, Sets[i-1].End, Sets[i-1].End + sizeOfSet);
-            //
+            Sets = sets;
 
             // Generating Rules //
             GenerateRules();
-            //
 
-            // Step 4 //
+            // Determining base of rules //
             GenerateBaseRules();
-            //
         }
 
         /// <summary>
