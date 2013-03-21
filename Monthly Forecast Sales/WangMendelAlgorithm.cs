@@ -125,7 +125,7 @@ namespace Monthly_Forecast_Sales
             }
 
             for (int i = 0; i < BaseRules.Count; i++)
-                if (BaseRules[i].Degree == -1)
+                if (BaseRules[i].Degree < 0.0)
                     BaseRules.Remove(BaseRules.ElementAt(i));
         }
     }

@@ -12,11 +12,11 @@ namespace Monthly_Forecast_Sales
         public Set[] Sets { get; set; }
         public List<Rule> BaseRules { get; set; }
 
-        private Pair<double, double>[] PertinenceDegrees { get; set; }
-        private Pair<string, string>[] Labels { get; set; }
+        public Pair<double, double>[] PertinenceDegrees { get; set; }
+        public Pair<string, string>[] Labels { get; set; }
         public string[][] Combinations { get; set; }
 
-        public List<Pair<string, double>> Outputs { get; set; }
+        private List<Pair<string, double>> Outputs { get; set; }
 
         /// <summary>
         /// 
@@ -29,7 +29,6 @@ namespace Monthly_Forecast_Sales
             // Initializing variables
             Sets = sets;
             BaseRules = baseRules;
-            Outputs = new List<Pair<string, double>>();
         }
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace Monthly_Forecast_Sales
         /// </summary>
         /// <param name="inputs">Entrada da janela do sistema</param>
         /// <returns>Saída inferida pelo sistema</returns>
-        public double doIt(double[] inputs)
+        public double DoIt(double[] inputs)
         {
             // Defining inputs
             Inputs = inputs;
@@ -51,7 +50,7 @@ namespace Monthly_Forecast_Sales
         /// <summary>
         /// Realiza o processo de fuzzificação das entradas do sistema
         /// </summary>
-        public void Fuzzification()
+        private void Fuzzification()
         {
             // Storing degrees and labels for each two sets possible
             PertinenceDegrees = new Pair<double, double>[Inputs.Length];
@@ -86,18 +85,25 @@ namespace Monthly_Forecast_Sales
         /// Realiza a inferência, aplicando as regras possiveis para as entradas
         /// Determina e aplica a quais regras serão ativadas
         /// </summary>
-        public void Inference()
+        private void Inference()
         {
+            Outputs = new List<Pair<string, double>>();
+
             // Determining which rules will be activated and with which combination of entries
             List<Pair<int, int>> toActivate = new List<Pair<int, int>>();
             for (int i = 0; i < Combinations.Length; i++)
                 for (int j = 0; j < BaseRules.Count; j++)
-                    if (Compare(Combinations[i], BaseRules[j].Conditions))
+                    if (Compare(BaseRules[j].Conditions, Combinations[i]))
                         toActivate.Add( new Pair<int, int>(i, j) );
 
-            foreach(Pair<int, int> pair in toActivate)
-                Console.WriteLine(pair.ToString());
-            Console.WriteLine("------------------------------------------------");
+            foreach (Pair<int, int> activated in toActivate)
+            {
+                Console.WriteLine(activated.ToString());
+                foreach (string value in Combinations[activated.First])
+                    Console.Write(value + "\t");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
 
             // Activating rules and applying fuzzy operators to get conclusion of rule
             foreach (Pair<int, int> activated in toActivate)
@@ -105,18 +111,24 @@ namespace Monthly_Forecast_Sales
                 // Calculating pertinence of each set in conditions
                 List<double> pertinences = new List<double>();
                 for (int i = 0; i < Inputs.Length; i++)
+                {
                     pertinences.Add(Combinations[activated.First][i] == Labels[i].First ? PertinenceDegrees[i].First : PertinenceDegrees[i].Second);
-
+                    Console.Write(pertinences[i] + "\t");
+                }
                 // Storing label and pertinence of conclusion
                 Outputs.Add(new Pair<string, double>(BaseRules[activated.Second].Conclusion, pertinences.Min()));
+                //Console.WriteLine(BaseRules[activated.Second].Conclusion + " = " + pertinences.Min());
             }
+
+            foreach (Pair<string, double> pair in Outputs)
+                Console.WriteLine(pair.ToString());
         }
 
         /// <summary>
         /// Realiza o processo de defuzzificação das saídas obtidas na inferência
         /// </summary>
         /// <returns>Saída real do sistema de inferência Fuzzy</returns>
-        public double Defuzzification()
+        private double Defuzzification()
         {
             // Defuzzification by the height method
             double output = 0.0;
@@ -189,7 +201,7 @@ namespace Monthly_Forecast_Sales
             if (var1.Length == var2.Length)
             {
                 for (int i = 0; i < var1.Length; i++)
-                    if (var1[i] != var2[i])
+                    if (!var1[i].Equals(var2[i]))
                         return false;
                 return true;
             }
