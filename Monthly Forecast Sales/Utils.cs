@@ -144,12 +144,11 @@ namespace Monthly_Forecast_Sales
         /// <returns></returns>
         public double getPertinenceDegree( double value )
         {
-            if (value <= Begin || value > End)
-                return 0.0;
-            else if (value > Begin && value <= Peak)
+            if (value > Begin && value <= Peak)
                 return 1 - (Peak - value) / (Peak - Begin);
-            else
+            else if (value > Peak && value <= End)
                 return (End - value) / (End - Peak);
+            else return 0.0;
         }
     }
 }

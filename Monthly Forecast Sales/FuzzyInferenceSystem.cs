@@ -64,6 +64,7 @@ namespace Monthly_Forecast_Sales
 
                 // Getting the pairs of sets that is being activated and its pertinence degrees
                 for (int j = 0; j < Sets.Length; j++)
+                {
                     if (Sets[j].getPertinenceDegree(Inputs[i]) > 0.0)
                         if (PertinenceDegrees[i].First == default(double))
                         {
@@ -75,6 +76,7 @@ namespace Monthly_Forecast_Sales
                             PertinenceDegrees[i].Second = Sets[j].getPertinenceDegree(Inputs[i]);
                             Labels[i].Second = Sets[j].Label;
                         }
+                }
             }
 
             // Combination of months to define which rules will be activated
@@ -96,32 +98,17 @@ namespace Monthly_Forecast_Sales
                     if (Compare(BaseRules[j].Conditions, Combinations[i]))
                         toActivate.Add( new Pair<int, int>(i, j) );
 
-            foreach (Pair<int, int> activated in toActivate)
-            {
-                Console.WriteLine(activated.ToString());
-                foreach (string value in Combinations[activated.First])
-                    Console.Write(value + "\t");
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-
             // Activating rules and applying fuzzy operators to get conclusion of rule
             foreach (Pair<int, int> activated in toActivate)
             {
                 // Calculating pertinence of each set in conditions
                 List<double> pertinences = new List<double>();
                 for (int i = 0; i < Inputs.Length; i++)
-                {
                     pertinences.Add(Combinations[activated.First][i] == Labels[i].First ? PertinenceDegrees[i].First : PertinenceDegrees[i].Second);
-                    Console.Write(pertinences[i] + "\t");
-                }
+                    
                 // Storing label and pertinence of conclusion
                 Outputs.Add(new Pair<string, double>(BaseRules[activated.Second].Conclusion, pertinences.Min()));
-                //Console.WriteLine(BaseRules[activated.Second].Conclusion + " = " + pertinences.Min());
             }
-
-            foreach (Pair<string, double> pair in Outputs)
-                Console.WriteLine(pair.ToString());
         }
 
         /// <summary>

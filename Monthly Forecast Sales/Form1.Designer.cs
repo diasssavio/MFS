@@ -40,9 +40,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -72,6 +73,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.button1);
@@ -120,7 +122,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(193, 64);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 29);
+            this.textBox2.Size = new System.Drawing.Size(59, 29);
             this.textBox2.TabIndex = 1;
             // 
             // textBox1
@@ -201,22 +203,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Inferência Fuzzy";
             // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(235, 33);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(209, 31);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Visible = false;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(235, 71);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(209, 31);
-            this.textBox4.TabIndex = 6;
-            this.textBox4.Visible = false;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -226,6 +212,31 @@
             this.label4.Size = new System.Drawing.Size(103, 25);
             this.label4.TabIndex = 5;
             this.label4.Text = "Saída Real";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(235, 71);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(209, 31);
+            this.textBox4.TabIndex = 6;
+            this.textBox4.Visible = false;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(235, 33);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(209, 31);
+            this.textBox3.TabIndex = 5;
+            this.textBox3.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(258, 67);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(24, 22);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "%";
             // 
             // Form1
             // 
@@ -267,6 +278,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

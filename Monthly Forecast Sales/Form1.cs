@@ -14,40 +14,66 @@ namespace Monthly_Forecast_Sales
     {
         private FuzzyInferenceSystem fuzzySystem;
         private Dictionary<string, double[]> month;
+        private Dictionary<string, double> real;
 
         public Form1()
         {
             InitializeComponent();
 
             month = new Dictionary<string, double[]>();
+            real = new Dictionary<string, double>();
 
             // 2011 Entries
-            month.Add("Jan/2011", new double[] { -18.91, 0.27, 7.54, -1.37, -2.37, -5.39, -0.08, 2.12, 0.79, 2.8, 2.13, 29.73 });
-            month.Add("Fev/2011", new double[] { 0.27, 7.54, -1.37, -2.37, -5.39, -0.08, 2.12, 0.79, 2.8, 2.13, 29.73, -20.49 });
-            month.Add("Mar/2011", new double[] { 7.54, -1.37, -2.37, -5.39, -0.08, 2.12, 0.79, 2.8, 2.13, 29.73, -20.49, -6.35 });
-            month.Add("Abr/2011", new double[] { -1.37, -2.37, -5.39, -0.08, 2.12, 0.79, 2.8, 2.13, 29.73, -20.49, -6.35, 10.14 });
-            month.Add("Mai/2011", new double[] { -2.37, -5.39, -0.08, 2.12, 0.79, 2.8, 2.13, 29.73, -20.49, -6.35, 10.14, 8.0 });
-            month.Add("Jun/2011", new double[] { -5.39, -0.08, 2.12, 0.79, 2.8, 2.13, 29.73, -20.49, -6.35, 10.14, 8.0, -10.92 });
-            month.Add("Jul/2011", new double[] { -0.08, 2.12, 0.79, 2.8, 2.13, 29.73, -20.49, -6.35, 10.14, 8.0, -10.92, -2.49 });
-            month.Add("Ago/2011", new double[] { 2.12, 0.79, 2.8, 2.13, 29.73, -20.49, -6.35, 10.14, 8.0, -10.92, -2.49, 6.41 });
-            month.Add("Set/2011", new double[] { 0.79, 2.8, 2.13, 29.73, -20.49, -6.35, 10.14, 8.0, -10.92, -2.49, 6.41, -1.84 });
-            month.Add("Out/2011", new double[] { 2.8, 2.13, 29.73, -20.49, -6.35, 10.14, 8.0, -10.92, -2.49, 6.41, -1.84, -0.22 });
-            month.Add("Nov/2011", new double[] { 2.13, 29.73, -20.49, -6.35, 10.14, 8.0, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16 });
-            month.Add("Dez/2011", new double[] { 29.73, -20.49, -6.35, 10.14, 8.0, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84 });
+            month.Add("Jan/2011", new double[] { -20.96, -5.54, 10.74, -3.28, 0.46, -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71 });
+            real.Add("Jan/2011", -20.49);
+            month.Add("Fev/2011", new double[] { -5.54, 10.74, -3.28, 0.46, -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71, -20.49 });
+            real.Add("Fev/2011", -6.35);
+            month.Add("Mar/2011", new double[] { 10.74, -3.28, 0.46, -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71, -20.49, -6.35 });
+            real.Add("Mar/2011", 10.14);
+            month.Add("Abr/2011", new double[] { -3.28, 0.46, -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71, -20.49, -6.35, 10.14 });
+            real.Add("Abr/2011", 8);
+            month.Add("Mai/2011", new double[] { 0.46, -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71, -20.49, -6.35, 10.14, 8 });
+            real.Add("Mai/2011", -10.92);
+            month.Add("Jun/2011", new double[] { -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71, -20.49, -6.35, 10.14, 8, -10.92 });
+            real.Add("Jun/2011", -2.49);
+            month.Add("Jul/2011", new double[] { 4.21, -1.37, -0.11, 7.82, -4.43, 34.71, -20.49, -6.35, 10.14, 8, -10.92, -2.49 });
+            real.Add("Jul/2011", 6.41);
+            month.Add("Ago/2011", new double[] { -1.37, -0.11, 7.82, -4.43, 34.71, -20.49, -6.35, 10.14, 8, -10.92, -2.49, 6.41 });
+            real.Add("Ago/2011", -1.84);
+            month.Add("Set/2011", new double[] { -0.11, 7.82, -4.43, 34.71, -20.49, -6.35, 10.14, 8, -10.92, -2.49, 6.41, -1.84 });
+            real.Add("Set/2011", -0.22);
+            month.Add("Out/2011", new double[] { 7.82, -4.43, 34.71, -20.49, -6.35, 10.14, 8, -10.92, -2.49, 6.41, -1.84, -0.22 });
+            real.Add("Out/2011", 5.16);
+            month.Add("Nov/2011", new double[] { -4.43, 34.71, -20.49, -6.35, 10.14, 8, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16 });
+            real.Add("Nov/2011", -1.84);
+            month.Add("Dez/2011", new double[] { 34.71, -20.49, -6.35, 10.14, 8, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84 });
+            real.Add("Dez/2011", 30.66);
 
             // 2012 Entries
             month.Add("Jan/2012", new double[] { -20.49, -6.35, 10.14, 8.0, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84, 30.66 });
+            real.Add("Jan/2012", -18.91);
             month.Add("Fev/2012", new double[] { -6.35, 10.14, 8.0, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84, 30.66, -18.91 });
+            real.Add("Fev/2012", 0.27);
             month.Add("Mar/2012", new double[] { 10.14, 8.0, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84, 30.66, -18.91, 0.27 });
+            real.Add("Mar/2012", 7.54);
             month.Add("Abr/2012", new double[] { 8.0, -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84, 30.66, -18.91, 0.27, 7.54 });
+            real.Add("Abr/2012", -1.37);
             month.Add("Mai/2012", new double[] { -10.92, -2.49, 6.41, -1.84, -0.22, 5.16, -1.84, 30.66, -18.91, 0.27, 7.54, -1.37 });
+            real.Add("Mai/2012", -2.37);
             month.Add("Jun/2012", new double[] { -2.49, 6.41, -1.84, -0.22, 5.16, -1.84, 30.66, -18.91, 0.27, 7.54, -1.37, -2.37 });
+            real.Add("Jun/2012", -5.39);
             month.Add("Jul/2012", new double[] { 6.41, -1.84, -0.22, 5.16, -1.84, 30.66, -18.91, 0.27, 7.54, -1.37, -2.37, -5.39 });
+            real.Add("Jul/2012", -0.08);
             month.Add("Ago/2012", new double[] { -1.84, -0.22, 5.16, -1.84, 30.66, -18.91, 0.27, 7.54, -1.37, -2.37, -5.39, -0.08 });
+            real.Add("Ago/2012", 2.12);
             month.Add("Set/2012", new double[] { -0.22, 5.16, -1.84, 30.66, -18.91, 0.27, 7.54, -1.37, -2.37, -5.39, -0.08, 2.12 });
+            real.Add("Set/2012", 0.79);
             month.Add("Out/2012", new double[] { 5.16, -1.84, 30.66, -18.91, 0.27, 7.54, -1.37, -2.37, -5.39, -0.08, 2.12, 0.79 });
+            real.Add("Out/2012", 2.80);
             month.Add("Nov/2012", new double[] { -1.84, 30.66, -18.91, 0.27, 7.54, -1.37, -2.37, -5.39, -0.08, 2.12, 0.79, 2.8 });
+            real.Add("Nov/2012", 2.13);
             month.Add("Dez/2012", new double[] { 30.66, -18.91, 0.27, 7.54, -1.37, -2.37, -5.39, -0.08, 2.12, 0.79, 2.8, 2.13 });
+            real.Add("Dez/2012", 29.73);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,9 +87,13 @@ namespace Monthly_Forecast_Sales
                                 -20.96, -5.54, 10.74, -3.28, 0.46, -4.59, 4.21, -1.37, -0.11, 7.82, -4.43, 34.71 };
 
             // Setting domain with security margin
-            double marginMin = -34.16;//inputs.Min() + ((double.Parse(textBox2.Text) / 100.0) * inputs.Min());
-            double marginMax = 42.72;//inputs.Max() + ((double.Parse(textBox2.Text) / 100.0) * inputs.Max());
-            Console.WriteLine("[ " + marginMax + ", " + marginMin + " ]");
+            double marginMin = inputs.Min();
+            double marginMax = inputs.Max();
+
+            double value = (int.Parse(textBox2.Text) / 100.0) * (marginMax - marginMin);
+            marginMin -= value;
+            marginMax += value;
+
             // Sets
             Set[] sets = new Set[int.Parse(textBox1.Text)];
 
@@ -87,20 +117,10 @@ namespace Monthly_Forecast_Sales
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine("Jan/2005 = " + fuzzySystem.DoIt(new double[] { -27.75, 1.47, 4.29, 6.51, -4.22, -2.79, 7.76, -1.24, -1.45, 7.99, -3.24, 36.31 }));
-            //Console.WriteLine("Fev/2005 = " + fuzzySystem.DoIt(new double[] { 1.47, 4.29, 6.51, -4.22, -2.79, 7.76, -1.24, -1.45, 7.99, -3.24, 36.31, -25.97 }));
-            //Console.WriteLine("Mar/2005 = " + fuzzySystem.DoIt(new double[] { 4.29, 6.51, -4.22, -2.79, 7.76, -1.24, -1.45, 7.99, -3.24, 36.31, -25.97, -4.22 }));
-            //Console.WriteLine("Abr/2005 = " + fuzzySystem.DoIt(new double[] { 6.51, -4.22, -2.79, 7.76, -1.24, -1.45, 7.99, -3.24, 36.31, -25.97, -4.22, 16.09 }));
-
-            Console.WriteLine("Jan/2011 = " + fuzzySystem.DoIt(month["Jan/2011"]));
-
-            //Console.WriteLine();
-            //for (int i = 0; i < fuzzySystem.PertinenceDegrees.Length; i++)
-            //    Console.WriteLine(fuzzySystem.PertinenceDegrees[i].ToString() + " = " + fuzzySystem.Labels[i].ToString());
-
-            //textBox3.Text = fuzzySystem.DoIt(month[comboBox1.SelectedItem.ToString()]).ToString();
-
+            textBox3.Text = fuzzySystem.DoIt(month[comboBox1.SelectedItem.ToString()]).ToString();
             textBox3.Visible = true;
+            textBox4.Text = real[comboBox1.SelectedItem.ToString()].ToString();
+            textBox4.Visible = true;
         }
     }
 }
